@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="CONSOLE-DEBUG" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d{ISO8601}  [%5p] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ALL"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+
+    <appender name="CONSOLE-WARN" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.err"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d{ISO8601}  [%5p] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="WARN"/>
+        </filter>
+    </appender>
+
+    <appender name="LOG-IN-FILE" class="org.apache.log4j.FileAppender">
+        <param name="file" value="download.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d{ISO8601}  [%5p] - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="DOWNLOADED-FILES" class="org.apache.log4j.FileAppender">
+        <param name="file" value="downloaded-files.txt"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%m%n"/>
+        </layout>
+    </appender>
+
+    <category name="org.hibernate" additivity="false">
+        <priority value="warn"/>
+        <appender-ref ref="CONSOLE-WARN"/>
+        <appender-ref ref="CONSOLE-DEBUG"/>
+    </category>
+
+    <category name="org.hibernate.SQL">
+        <priority value="debug"/>
+    </category>
+
+    <category name="downloaded-files" additivity="false">
+        <priority value="info"/>
+        <appender-ref ref="DOWNLOADED-FILES"/>
+    </category>
+
+    <root>
+        <priority value="debug"/>
+        <appender-ref ref="CONSOLE-WARN"/>
+        <appender-ref ref="CONSOLE-DEBUG"/>
+        <appender-ref ref="LOG-IN-FILE"/>
+    </root>
+</log4j:configuration>
